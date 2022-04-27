@@ -61,14 +61,18 @@ export default class RideScreen extends Component {
 
         //Check the Bike Availability using the function 'checkBikeAvailability()' and by passing the argument 'bikeId'
         //Store the status in a variable 'transactionType'
+        var transactionType=await this.checkBikeAvailability(bikeId)
 
 
 
         
         if (!transactionType) {
             // if 'transactionType' is empty, make the 'bikeId' value as ""
-            
+            this.setState({
+                bikeId: ""
+            })
             // Make an alert message to pop on the screen to enter the valid bike id
+            Alert.alert("Please enter a valid bike id")
             
         } else if (transactionType === "under_maintenance") {
             this.setState({
@@ -156,6 +160,7 @@ export default class RideScreen extends Component {
 
                 if (!doc.data().under_maintenance) {
                     //if the bike is available then transaction type will be 'rented' otherwise it will be 'return'
+                    transactionType=doc.data().is_bike_available ?'rented':'return'
 
                     
 
